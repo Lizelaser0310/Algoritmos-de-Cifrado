@@ -82,10 +82,8 @@ class CSFrame(wx.Frame):
         self.vboxMain.Add(self.tcResults, 1, wx.EXPAND|wx.LEFT|wx.RIGHT, 15)
         self.vboxMain.AddSpacer(15)
         self.vboxMain.Add(btnchange, 0, wx.ALIGN_CENTER_HORIZONTAL)
+        self.vboxMain.AddSpacer(15)
 
-        # and a status bar
-        self.CreateStatusBar()
-        # self.SetStatusText('Welcome to wxPython!')
 
     def getTitle(self):
         return 'Cifrado por transposición' if self.isTransposition else 'Cifrado del César'
@@ -99,12 +97,25 @@ class CSFrame(wx.Frame):
         self.tcResults.SetValue('')
 
         # Variables
+        preKey = self.tcKey.GetLineText(0)
+        message = self.tcMessage.GetLineText(0)
+
+        if not message.strip() or not preKey.strip():
+            if not message.strip() and not preKey.strip():
+                self.tcResults.WriteText('Error: Los campos MENSAJE y CLAVE se encuentran vacíos.')
+                return
+            elif not preKey.strip():
+                self.tcResults.WriteText('Error: El campo CLAVE se encuentra vacío.')
+                return
+            else:
+                self.tcResults.WriteText('Error: El campo MENSAJE se encuentra vacío.')
+                return
+
         try:
-            key = int(self.tcKey.GetLineText(0))
+            key = int(preKey)
         except ValueError:
             self.tcResults.WriteText('Error: Asegúrese de ingresar un ENTERO como clave.')
             return
-        message = self.tcMessage.GetLineText(0)        
 
         if self.isTransposition:
             #Cada cadena de texto en el mensaje cifrado representa una columna en la matriz
@@ -131,12 +142,25 @@ class CSFrame(wx.Frame):
         self.tcResults.SetValue('')
 
         # Variables
+        preKey = self.tcKey.GetLineText(0)
+        message = self.tcMessage.GetLineText(0)
+
+        if not message.strip() or not preKey.strip():
+            if not message.strip() and not preKey.strip():
+                self.tcResults.WriteText('Error: Los campos MENSAJE y CLAVE se encuentran vacíos.')
+                return
+            elif not preKey.strip():
+                self.tcResults.WriteText('Error: El campo CLAVE se encuentra vacío.')
+                return
+            else:
+                self.tcResults.WriteText('Error: El campo MENSAJE se encuentra vacío.')
+                return
+
         try:
-            key = int(self.tcKey.GetLineText(0))
+            key = int(preKey)
         except ValueError:
             self.tcResults.WriteText('Error: Asegúrese de ingresar un ENTERO como clave.')
-            return
-        message = self.tcMessage.GetLineText(0)        
+            return      
 
         if self.isTransposition:
             # La función decrypt transposition simula las columnas y filas 
